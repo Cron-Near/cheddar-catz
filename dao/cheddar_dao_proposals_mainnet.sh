@@ -21,7 +21,7 @@ export NEAR_ENV=mainnet
 ### NEAR PAYOUT AMOUNTS
 ### --------------------------------
 base_zeroes="0000000000000000000000000"
-payout_amounts=("5" "2" "2" "2" "1" "1" "1" "1" "1" "1" "1" "1" "1" "1" "1")
+payout_amounts=("5" "2" "2" "1" "1" "1" "1" "1" "1" "1" "1" "1" "1" "1")
 token_id=
 accounts=("dantochoicoin.near" "dank12ey.near" "xexilia.near" "bahai1808.near" "hien.near" "mr_free.near" "vuabongbong.near")
 descriptions=("Bestestest GIF" "Best Use of CheddarCatz" "Best Use of CheddarCatz" "Most Creative GIF" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner")

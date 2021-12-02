@@ -21,7 +21,7 @@ export NEAR_ENV=mainnet
 ### NEAR PAYOUT AMOUNTS
 ### --------------------------------
 base_zeroes="0000000000000000000000000"
-payout_amounts=("1" "1" "1" "1" "1" "1" "1" "1")
+payout_amounts=("2" "1" "1" "1" "1" "1" "1" "1" "1")
 token_id=
 accounts=("bpc9unit.near" "avula.near" "adam7.near" "raul0287.near" "2bangio.near" "jang13.near" "mayokinney88818.near" "vtv3.near")
 descriptions=("Best Use of CheddarCatz" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner")
