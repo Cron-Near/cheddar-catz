@@ -56,7 +56,7 @@ do
   #           {
   #             "method_name": "add_proposal",
   #             "args": "'$FIXED_SUB_ARGS'",
-  #             "deposit": "100000000000000000000000",
+  #             "deposit": "1000000000000000000000000",
   #             "gas": "30000000000000"
   #           }
   #         ]
