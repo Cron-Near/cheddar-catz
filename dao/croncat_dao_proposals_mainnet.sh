@@ -13,48 +13,48 @@ CROSS_DAO_ACCOUNT=cheddarcatz.$DAO_ROOT_ACC
 export NEAR_ENV=mainnet
 
 
-##############################################################################
-### STEP 1. Create the Payout Proposals
-##############################################################################
+# ##############################################################################
+# ### STEP 1. Create the Payout Proposals
+# ##############################################################################
 
-### --------------------------------
-### NEAR PAYOUT AMOUNTS
-### --------------------------------
-base_zeroes="0000000000000000000000000"
-payout_amounts=("2" "1" "1" "1" "1" "1" "1" "1" "1")
-token_id=
-accounts=("bpc9unit.near" "avula.near" "adam7.near" "raul0287.near" "2bangio.near" "jang13.near" "mayokinney88818.near" "vtv3.near")
-descriptions=("Best Use of CheddarCatz" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner")
+# ### --------------------------------
+# ### NEAR PAYOUT AMOUNTS
+# ### --------------------------------
+# base_zeroes="0000000000000000000000000"
+# payout_amounts=("2" "1" "1" "1" "1" "1" "1" "1" "1")
+# token_id=
+# accounts=("bpc9unit.near" "avula.near" "adam7.near" "raul0287.near" "2bangio.near" "jang13.near" "mayokinney88818.near" "vtv3.near")
+# descriptions=("Best Use of CheddarCatz" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner")
 
 
-# Loop All Winners and submit proposals
-for (( c=0; c<=${#accounts[@]} - 1; c++ ))
-do
-  echo "PROPOSAL FOR WINNER: ${accounts[c]} ${payout_amounts[c]}${base_zeroes} ${descriptions[c]}"
-  # # The payout proposal
-  # SUB_ADD_PROPOSAL=`echo "{\"proposal\": { \"description\": \"${descriptions[c]}\", \"kind\": { \"Transfer\": { \"token_id\": \"$token_id\", \"receiver_id\": \"${accounts[c]}\", \"amount\": \"${payout_amounts[c]}${base_zeroes}\" } } } }" | base64`
-  # FIXED_SUB_ARGS=`echo $SUB_ADD_PROPOSAL | tr -d '\r' | tr -d ' '`
+# # Loop All Winners and submit proposals
+# for (( c=0; c<=${#accounts[@]} - 1; c++ ))
+# do
+#   echo "PROPOSAL FOR WINNER: ${accounts[c]} ${payout_amounts[c]}${base_zeroes} ${descriptions[c]}"
+#   # The payout proposal
+#   SUB_ADD_PROPOSAL=`echo "{\"proposal\": { \"description\": \"${descriptions[c]}\", \"kind\": { \"Transfer\": { \"token_id\": \"$token_id\", \"receiver_id\": \"${accounts[c]}\", \"amount\": \"${payout_amounts[c]}${base_zeroes}\" } } } }" | base64`
+#   FIXED_SUB_ARGS=`echo $SUB_ADD_PROPOSAL | tr -d '\r' | tr -d ' '`
 
-  # ## Dao can create a payout proposal on another DAO
-  # near call $DAO_ACCOUNT add_proposal '{
-  #   "proposal": {
-  #     "description": "Add proposal to CheddarCatz for Winner Payout (Winner '${accounts[c]}')",
-  #     "kind": {
-  #       "FunctionCall": {
-  #         "receiver_id": "'$CROSS_DAO_ACCOUNT'",
-  #         "actions": [
-  #           {
-  #             "method_name": "add_proposal",
-  #             "args": "'$FIXED_SUB_ARGS'",
-  #             "deposit": "100000000000000000000000",
-  #             "gas": "30000000000000"
-  #           }
-  #         ]
-  #       }
-  #     }
-  #   }
-  # }' --accountId $MASTER_ACC --amount 0.1
-done
+#   ## Dao can create a payout proposal on another DAO
+#   near call $DAO_ACCOUNT add_proposal '{
+#     "proposal": {
+#       "description": "Add proposal to CheddarCatz for Winner Payout (Winner '${accounts[c]}')",
+#       "kind": {
+#         "FunctionCall": {
+#           "receiver_id": "'$CROSS_DAO_ACCOUNT'",
+#           "actions": [
+#             {
+#               "method_name": "add_proposal",
+#               "args": "'$FIXED_SUB_ARGS'",
+#               "deposit": "100000000000000000000000",
+#               "gas": "30000000000000"
+#             }
+#           ]
+#         }
+#       }
+#     }
+#   }' --accountId $MASTER_ACC --amount 0.1
+# done
 
 
 # ##############################################################################
