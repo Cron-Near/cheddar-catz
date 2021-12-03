@@ -62,41 +62,85 @@ export NEAR_ENV=mainnet
 ### STEP 2. Create the $Cheddar Payout Proposals
 ##############################################################################
 
-### --------------------------------
-### CHEDDAR PAYOUT AMOUNTS
-### --------------------------------
-base_zeroes="0000000000000000000000000"
-# payout_amounts=("50" "25" "25" "25" "25" "15" "15" "15" "15" "15" "15" "15" "15" "15" "15")
+# ### --------------------------------
+# ### CHEDDAR PAYOUT AMOUNTS
+# ### --------------------------------
+# base_zeroes="0000000000000000000000000"
+# # payout_amounts=("50" "25" "25" "25" "25" "15" "15" "15" "15" "15" "15" "15" "15" "15" "15")
+# # token_id=token.cheddar.near
+# # accounts=("dantochoicoin.near" "bpc9unit.near" "dank12ey.near" "xexilia.near" "bahai1808.near" "hien.near" "mr_free.near" "vuabongbong.near" "avula.near" "adam7.near" "raul0287.near" "2bangio.near" "jang13.near" "mayokinney88818.near" "vtv3.near")
+# # descriptions=("Bestestest GIF" "Best Use of CheddarCatz" "Best Use of CheddarCatz" "Best Use of CheddarCatz" "Most Creative GIF" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner")
+
+# payout_amounts=("15" "15" "15" "15" "15" "15" "15" "15")
 # token_id=token.cheddar.near
-# accounts=("dantochoicoin.near" "bpc9unit.near" "dank12ey.near" "xexilia.near" "bahai1808.near" "hien.near" "mr_free.near" "vuabongbong.near" "avula.near" "adam7.near" "raul0287.near" "2bangio.near" "jang13.near" "mayokinney88818.near" "vtv3.near")
-# descriptions=("Bestestest GIF" "Best Use of CheddarCatz" "Best Use of CheddarCatz" "Best Use of CheddarCatz" "Most Creative GIF" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner")
-
-payout_amounts=("15" "15" "15" "15" "15" "15" "15" "15")
-token_id=token.cheddar.near
-accounts=("adam7.near" "raul0287.near" "2bangio.near" "jang13.near" "mayokinney88818.near" "vtv3.near")
-descriptions=("Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner")
+# accounts=("adam7.near" "raul0287.near" "2bangio.near" "jang13.near" "mayokinney88818.near" "vtv3.near")
+# descriptions=("Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner")
 
 
-# Loop All Winners and submit proposals
-for (( c=0; c<=${#accounts[@]} - 1; c++ ))
+# # Loop All Winners and submit proposals
+# for (( c=0; c<=${#accounts[@]} - 1; c++ ))
+# do
+#   echo "CHEDDAR PROPOSAL FOR WINNER: ${accounts[c]} ${payout_amounts[c]}${base_zeroes} ${descriptions[c]}"
+#   # The payout proposal
+#   SUB_ADD_PROPOSAL=`echo "{\"proposal\": { \"description\": \"${descriptions[c]}\", \"kind\": { \"Transfer\": { \"token_id\": \"$token_id\", \"receiver_id\": \"${accounts[c]}\", \"amount\": \"${payout_amounts[c]}${base_zeroes}\" } } } }" | base64`
+#   FIXED_SUB_ARGS=`echo $SUB_ADD_PROPOSAL | tr -d '\r' | tr -d ' '`
+
+#   ## Dao can create a payout proposal on another DAO
+#   near call $DAO_ACCOUNT add_proposal '{
+#     "proposal": {
+#       "description": "Add proposal to CheddarCatz for Cheddar Winner Payout (Winner '${accounts[c]}')",
+#       "kind": {
+#         "FunctionCall": {
+#           "receiver_id": "'$CROSS_DAO_ACCOUNT'",
+#           "actions": [
+#             {
+#               "method_name": "add_proposal",
+#               "args": "'$FIXED_SUB_ARGS'",
+#               "deposit": "1000000000000000000000000",
+#               "gas": "30000000000000"
+#             }
+#           ]
+#         }
+#       }
+#     }
+#   }' --accountId $MASTER_ACC --amount 1
+# done
+
+
+##############################################################################
+### STEP 3. Create the Action Proposals
+##############################################################################
+
+# Loop All Action IDs and submit as proposals
+# 1
+actions=(0 1 2 3 4 5 6 7 8 9)
+# # 2
+# actions=(10 11 12 13 14 15 16 17 18 19)
+# # 3
+# actions=(20 21 22 23 24 25 26 27 28 29)
+# # 4
+# actions=(30 31 32 33 34 35)
+for (( d=0; d<=${#actions[@]} - 1; d++ ))
 do
-  echo "CHEDDAR PROPOSAL FOR WINNER: ${accounts[c]} ${payout_amounts[c]}${base_zeroes} ${descriptions[c]}"
-  # The payout proposal
-  SUB_ADD_PROPOSAL=`echo "{\"proposal\": { \"description\": \"${descriptions[c]}\", \"kind\": { \"Transfer\": { \"token_id\": \"$token_id\", \"receiver_id\": \"${accounts[c]}\", \"amount\": \"${payout_amounts[c]}${base_zeroes}\" } } } }" | base64`
-  FIXED_SUB_ARGS=`echo $SUB_ADD_PROPOSAL | tr -d '\r' | tr -d ' '`
+  action_type="VoteApprove"
+  # action_type="VoteReject"
+  # action_type="VoteRemove"
+  SUB_ACT_PROPOSAL=`echo "{\"id\": ${actions[d]}, \"action\" :\"${action_type}\"}" | base64`
+  FIXED_SUB_ARGS=`echo $SUB_ACT_PROPOSAL | tr -d '\r' | tr -d ' '`
+  echo "Payload ${SUB_ACT_PROPOSAL}"
 
   ## Dao can create a payout proposal on another DAO
   near call $DAO_ACCOUNT add_proposal '{
     "proposal": {
-      "description": "Add proposal to CheddarCatz for Cheddar Winner Payout (Winner '${accounts[c]}')",
+      "description": "Add proposal to Vote on CheddarCatz for '${action_type}' action",
       "kind": {
         "FunctionCall": {
           "receiver_id": "'$CROSS_DAO_ACCOUNT'",
           "actions": [
             {
-              "method_name": "add_proposal",
+              "method_name": "act_proposal",
               "args": "'$FIXED_SUB_ARGS'",
-              "deposit": "1000000000000000000000000",
+              "deposit": "0",
               "gas": "30000000000000"
             }
           ]
@@ -105,46 +149,6 @@ do
     }
   }' --accountId $MASTER_ACC --amount 1
 done
-
-
-# ##############################################################################
-# ### STEP 3. Create the Action Proposals
-# ### (Uncomment & Run this ONLY AFTER the other above proposals have PASSED)
-# ### (You can then grab the IDs of the proposals and put into array on line 111)
-# ##############################################################################
-
-# # Loop All Action IDs and submit as proposals
-# # TODO: CHANGE THESE!
-# actions=(0 1 2 3 4 5 6 7)
-# for (( d=0; d<=${#actions[@]} - 1; d++ ))
-# do
-#   action_type="VoteApprove"
-#   # action_type="VoteReject"
-#   # action_type="VoteRemove"
-#   SUB_ACT_PROPOSAL=`echo "{\"id\": ${actions[d]}, \"action\" :\"${action_type}\"}" | base64`
-#   FIXED_SUB_ARGS=`echo $SUB_ACT_PROPOSAL | tr -d '\r' | tr -d ' '`
-#   echo "Payload ${SUB_ACT_PROPOSAL}"
-
-#   # ## Dao can create a payout proposal on another DAO
-#   # near call $DAO_ACCOUNT add_proposal '{
-#   #   "proposal": {
-#   #     "description": "Add proposal to CheddarCatz for '${action_type}' action",
-#   #     "kind": {
-#   #       "FunctionCall": {
-#   #         "receiver_id": "'$CROSS_DAO_ACCOUNT'",
-#   #         "actions": [
-#   #           {
-#   #             "method_name": "act_proposal",
-#   #             "args": "'$FIXED_SUB_ARGS'",
-#   #             "deposit": "0",
-#   #             "gas": "30000000000000"
-#   #           }
-#   #         ]
-#   #       }
-#   #     }
-#   #   }
-#   # }' --accountId $MASTER_ACC --amount 0.1
-# done
 
 
 # ##############################################################################
