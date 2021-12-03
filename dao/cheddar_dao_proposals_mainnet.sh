@@ -13,48 +13,49 @@ CROSS_DAO_ACCOUNT=cheddarcatz.$DAO_ROOT_ACC
 export NEAR_ENV=mainnet
 
 
-##############################################################################
-### STEP 1. Create the $NEAR Payout Proposals
-##############################################################################
+# DONE!!!!!!!
+# ##############################################################################
+# ### STEP 1. Create the $NEAR Payout Proposals
+# ##############################################################################
 
-### --------------------------------
-### NEAR PAYOUT AMOUNTS
-### --------------------------------
-base_zeroes="0000000000000000000000000"
-payout_amounts=("5" "2" "2" "1" "1" "1" "1" "1" "1" "1" "1" "1" "1" "1")
-token_id=
-accounts=("dantochoicoin.near" "dank12ey.near" "xexilia.near" "bahai1808.near" "hien.near" "mr_free.near" "vuabongbong.near")
-descriptions=("Bestestest GIF" "Best Use of CheddarCatz" "Best Use of CheddarCatz" "Most Creative GIF" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner")
+# ### --------------------------------
+# ### NEAR PAYOUT AMOUNTS
+# ### --------------------------------
+# base_zeroes="0000000000000000000000000"
+# payout_amounts=("5" "2" "2" "1" "1" "1" "1" "1" "1" "1" "1" "1" "1" "1")
+# token_id=
+# accounts=("dantochoicoin.near" "dank12ey.near" "xexilia.near" "bahai1808.near" "hien.near" "mr_free.near" "vuabongbong.near")
+# descriptions=("Bestestest GIF" "Best Use of CheddarCatz" "Best Use of CheddarCatz" "Most Creative GIF" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner")
 
 
-# Loop All Winners and submit proposals
-for (( b=0; b<=${#accounts[@]} - 1; b++ ))
-do
-  echo "NEAR PROPOSAL FOR WINNER: ${accounts[b]} ${payout_amounts[b]}${base_zeroes} ${descriptions[b]}"
-  # The payout proposal
-  SUB_ADD_PROPOSAL=`echo "{\"proposal\": { \"description\": \"${descriptions[b]}\", \"kind\": { \"Transfer\": { \"token_id\": \"$token_id\", \"receiver_id\": \"${accounts[b]}\", \"amount\": \"${payout_amounts[b]}${base_zeroes}\" } } } }" | base64`
-  FIXED_SUB_ARGS=`echo $SUB_ADD_PROPOSAL | tr -d '\r' | tr -d ' '`
+# # Loop All Winners and submit proposals
+# for (( b=0; b<=${#accounts[@]} - 1; b++ ))
+# do
+#   echo "NEAR PROPOSAL FOR WINNER: ${accounts[b]} ${payout_amounts[b]}${base_zeroes} ${descriptions[b]}"
+#   # The payout proposal
+#   SUB_ADD_PROPOSAL=`echo "{\"proposal\": { \"description\": \"${descriptions[b]}\", \"kind\": { \"Transfer\": { \"token_id\": \"$token_id\", \"receiver_id\": \"${accounts[b]}\", \"amount\": \"${payout_amounts[b]}${base_zeroes}\" } } } }" | base64`
+#   FIXED_SUB_ARGS=`echo $SUB_ADD_PROPOSAL | tr -d '\r' | tr -d ' '`
 
-  ## Dao can create a payout proposal on another DAO
-  near call $DAO_ACCOUNT add_proposal '{
-    "proposal": {
-      "description": "Add proposal to CheddarCatz for NEAR Winner Payout (Winner '${accounts[b]}')",
-      "kind": {
-        "FunctionCall": {
-          "receiver_id": "'$CROSS_DAO_ACCOUNT'",
-          "actions": [
-            {
-              "method_name": "add_proposal",
-              "args": "'$FIXED_SUB_ARGS'",
-              "deposit": "1000000000000000000000000",
-              "gas": "30000000000000"
-            }
-          ]
-        }
-      }
-    }
-  }' --accountId $MASTER_ACC --amount 1
-done
+#   ## Dao can create a payout proposal on another DAO
+#   near call $DAO_ACCOUNT add_proposal '{
+#     "proposal": {
+#       "description": "Add proposal to CheddarCatz for NEAR Winner Payout (Winner '${accounts[b]}')",
+#       "kind": {
+#         "FunctionCall": {
+#           "receiver_id": "'$CROSS_DAO_ACCOUNT'",
+#           "actions": [
+#             {
+#               "method_name": "add_proposal",
+#               "args": "'$FIXED_SUB_ARGS'",
+#               "deposit": "1000000000000000000000000",
+#               "gas": "30000000000000"
+#             }
+#           ]
+#         }
+#       }
+#     }
+#   }' --accountId $MASTER_ACC --amount 1
+# done
 
 
 ##############################################################################
@@ -65,10 +66,15 @@ done
 ### CHEDDAR PAYOUT AMOUNTS
 ### --------------------------------
 base_zeroes="0000000000000000000000000"
-payout_amounts=("50" "25" "25" "25" "25" "15" "15" "15" "15" "15" "15" "15" "15" "15" "15")
+# payout_amounts=("50" "25" "25" "25" "25" "15" "15" "15" "15" "15" "15" "15" "15" "15" "15")
+# token_id=token.cheddar.near
+# accounts=("dantochoicoin.near" "bpc9unit.near" "dank12ey.near" "xexilia.near" "bahai1808.near" "hien.near" "mr_free.near" "vuabongbong.near" "avula.near" "adam7.near" "raul0287.near" "2bangio.near" "jang13.near" "mayokinney88818.near" "vtv3.near")
+# descriptions=("Bestestest GIF" "Best Use of CheddarCatz" "Best Use of CheddarCatz" "Best Use of CheddarCatz" "Most Creative GIF" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner")
+
+payout_amounts=("15" "15" "15" "15" "15" "15" "15" "15")
 token_id=token.cheddar.near
-accounts=("dantochoicoin.near" "bpc9unit.near" "dank12ey.near" "xexilia.near" "bahai1808.near" "hien.near" "mr_free.near" "vuabongbong.near" "avula.near" "adam7.near" "raul0287.near" "2bangio.near" "jang13.near" "mayokinney88818.near" "vtv3.near")
-descriptions=("Bestestest GIF" "Best Use of CheddarCatz" "Best Use of CheddarCatz" "Best Use of CheddarCatz" "Most Creative GIF" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner")
+accounts=("adam7.near" "raul0287.near" "2bangio.near" "jang13.near" "mayokinney88818.near" "vtv3.near")
+descriptions=("Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner" "Top 10 Winner")
 
 
 # Loop All Winners and submit proposals
